@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scaccia-Noia Web App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <main class="app-container">
+        
+        <section id="screen-home" class="app-screen active">
+            <h1 class="main-title">Ti annoi? 🥱</h1>
+            <p class="subtitle">Sconfiggi la noia generando un'attività su misura per te.</p>
+            
+            <div class="glass-card controls-group">
+                <label for="category-select">Scegli dove o come agire:</label>
+                <select id="category-select" class="custom-select">
+                    <option value="in_casa">🏠 In Casa</option>
+                    <option value="all_aperto">🌳 All'Aperto</option>
+                    <option value="produttive">🚀 Produttive</option>
+                </select>
+                
+                <button id="btn-generate" class="btn-primary">Genera Attività ✨</button>
+            </div>
+
+            <div id="result-box" class="glass-card result-card hidden">
+                <p id="activity-text">L'attività apparirà qui...</p>
+                <button id="btn-heart" class="btn-heart-action">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="screen-favorites" class="app-screen">
+            <h2 class="section-title">I Tuoi Preferiti ❤️</h2>
+            <p class="subtitle">Le idee che hai salvato per il futuro.</p>
+            
+            <div id="favorites-list" class="favorites-scroll-container">
+                <div class="empty-state">Non hai ancora salvato nessuna attività. Fai un salto nella Home!</div>
+            </div>
+        </section>
+
+        <section id="screen-profile" class="app-screen">
+            <h2 class="section-title">Il Tuo Profilo 📊</h2>
+            <p class="subtitle">Analisi dei tuoi momenti di noia durante la settimana.</p>
+            
+            <div class="glass-card stat-box">
+                <h3>Stile di Noia Dominante</h3>
+                <p id="dominant-category-text" class="stat-highlight">Nessun dato</p>
+            </div>
+
+            <div class="glass-card chart-card">
+                <h3>Frequenza della Noia (Settimanale)</h3>
+                <div class="chart-container">
+                    <svg viewBox="0 0 700 250" class="boredom-svg-chart">
+                        <defs>
+                            <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.4"/>
+                                <stop offset="100%" stop-color="#4facfe" stop-opacity="0.0"/>
+                            </linearGradient>
+                        </defs>
+                        <path id="chart-area" d="" fill="url(#chart-grad)"></path>
+                        <path id="chart-line" d="" fill="none" stroke="#00f2fe" stroke-width="4" stroke-linecap="round"></path>
+                        <g id="chart-dots"></g>
+                    </svg>
+                </div>
+                <div class="chart-labels">
+                    <span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-target="screen-home">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" data-target="screen-favorites">
+            <i class="fa-solid fa-heart"></i>
+            <span>Preferiti</span>
+        </button>
+        <button class="nav-item" data-target="screen-profile">
+            <i class="fa-solid fa-user"></i>
+            <span>Tu</span>
+        </button>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
