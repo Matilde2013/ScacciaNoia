@@ -239,7 +239,6 @@ const databaseAttivita = {
         "Fai una lista di 15 attività ripetitive che potresti delegare a un'intelligenza artificiale o automazione 🤖"
     ]
 };
-
 // ==========================================
 // GESTIONE STATO DELL'APPLICAZIONE
 // ==========================================
@@ -341,8 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     
     function salvaStatistica(categoria) {
-        // Incrementa contatore categoria dominante
-        statistich[categoria] = (statistich[categoria] || 0) + 1;
+        // Incrementa contatore categoria dominante (CORRETTO!)
+        statistiche[categoria] = (statistiche[categoria] || 0) + 1;
 
         // Incrementa giorno della settimana corrente (0 = Lunedì, 6 = Domenica)
         let giornoIncluso = new Date().getDay();
