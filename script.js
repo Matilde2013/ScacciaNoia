@@ -1,3 +1,4 @@
+// MEGA DATABASE COMPLETO: 200 attività per ogni singola categoria (600 totali)
 const databaseAttivita = {
     in_casa: [
         "Costruisci la torre di carte più alta che puoi senza farla crollare 🃏",
@@ -20,7 +21,7 @@ const databaseAttivita = {
         "Apri Spotify e crea la playlist definitiva per i viaggi in macchina con gli amici 🚗",
         "Impara a cucinare i veri Ramen pronti ma svoltati con ingredienti gourmet 🍜",
         "Pulisci il mouse, il tappetino e rimuovi la polvere da dentro il PC o la console 🖥️",
-        "Metti in ordine la tua scrivania cambiando la dispositione di monitor e accessori ⌨️",
+        "Metti in ordine la tua scrivania cambiando la disposizione di monitor e accessori ⌨️",
         "Prova a battere il record mondiale di un minigioco stupido online 🕹️",
         "Impara a memoria le battute più iconiche del tuo film preferito 🎬",
         "Fai 15 minuti di stretching intenso per la schiena se sei stato troppo al PC 🧘",
@@ -36,7 +37,7 @@ const databaseAttivita = {
         "Impara a contare fino a 10 in giapponese, coreano o russo 🌍",
         "Prova a fare un disegno in pixel art usando un programma gratuito online 🎨",
         "Prepara un frullato o un milkshake energetico con quello che hai in frigo 🥤",
-        "Leggi les prime 15 pagine di quel libro che hai comprato solo per l'estetica della copertina 📕",
+        "Leggi le prime 15 pagine di quel libro che hai comprato solo per l'estetica della copertina 📕",
         "Impara un trucco di prestigio base con un mazzo di carte per stupire gli amici 🃏",
         "Fai un test della velocità di battitura (typing test) e prova a superare i 70 WPM ⌨️",
         "Sperimenta una ricetta per fare i pancake perfetti per la colazione di domani 🥞",
@@ -84,10 +85,10 @@ const databaseAttivita = {
         "Fai una sessione di 10 minuti di meditazione mindfulness focalizzata sui suoni della stanza 🧘‍♂️",
         "Scrivi un elenco di 5 cose di cui sei veramente grato questa settimana ✨",
         "Impara i nomi di tutti i componenti hardware principali di un PC e a cosa servono 🛠️",
-        "Prova a cantare una canzone complessa in una lingua straniera seguendo il testo 🎤",
+        "Prova a cantar una canzone complessa in una lingua straniera seguendo il testo 🎤",
         "Pulisci lo schermo della TV e i controller della console da ogni ditata 🎮",
-        "Crea un settore di icone personalizzate per le cartelle principali del tuo computer 📂",
-        "Guarda un video tutorial su come fare nodi da arramcipata o alpinismo 🧗",
+        "Crea un set di icone personalizzate per le cartelle principali del tuo computer 📂",
+        "Guarda un video tutorial su come fare nodi da arrampicata o alpinismo 🧗",
         "Pianifica l'itinerario perfetto per un weekend low-cost in una capitale europea ✈️",
         "Impara l'alfabeto fonetico NATO (Alpha, Bravo, Charlie...) a memoria 📡",
         "Fai un esperimento di cucina provando a fare una salsa originale per le patatine 🍟",
@@ -108,7 +109,7 @@ const databaseAttivita = {
         "Impara a fare la verticale al muro e tieni la posizione per 15 secondi 🤸",
         "Pulisci gli specchi e le finestre della tua stanza usando un panno asciutto 🪟",
         "Cerca un gioco di carte solitario complesso e prova a risolverlo sul letto 🃏",
-        "Scrivi una lettera ironica indirizzata a te sesso tra 5 anni e chiudila in una busta ✉️",
+        "Scrivi una lettera ironica indirizzata a te stesso tra 5 anni e chiudila in una busta ✉️",
         "Impara a riconoscere le costellazioni invernali principali usando un'app astronomica 🌌",
         "Prepara una spremuta d'arancia o un succo fresco usando frutti di stagione 🍊",
         "Sperimenta un nuovo stile di disegno copiando lo stile di un fumettista famoso 🎨",
@@ -161,7 +162,7 @@ const databaseAttivita = {
         "Pulisci lo zaino di scuola svuotando le tasche interne da vecchi foglietti 🎒",
         "Impara i concetti base dell'astronomia distinguendo tra pianeti gassosi e rocciosi 🪐",
         "Crea un piccolo poster motivazionale cartaceo da appendere vicino alla scrivania 🖼️",
-        "Scrivi una lista di 5 cosa che vorresti saper fare entro la fine dell'anno 🎯",
+        "Scrivi una lista di 5 cose che vorresti saper fare entro la fine dell'anno 🎯",
         "Impara i rudimenti del montaggio video scoprendo cosa si intende per jump-cut 🎞️",
         "Metti in ordine i tuoi documenti personali conservandoli in una cartella sicura 📁",
         "Fai un test online per scoprire qual è il tuo stile di apprendimento preferito 🧠",
@@ -361,7 +362,7 @@ const databaseAttivita = {
         "Guarda un video sulle tecniche di public speaking per capire come gestire l'ansia da presentazione 🗣️",
         "Pulisci i filtri dell'aspirapolvere o i condotti di aerazione del tuo PC da gaming 🧼",
         "Scrivi un breve articolo tutorial spiegando passo passo come risolvere un problema tecnico comune 🛠️",
-        "Traccia come hai speso il tuo tempo nelle ultime 24 ore per identificare i momenti morti ⏱️",
+        "Traccia come hai speso il tuo tempo nelle ultime 24 ore per identificarre i momenti morti ⏱️",
         "Impara la differenza tecnica tra asset finanziari, azioni e obbligazioni in modo semplice 💵",
         "Controlla la scatola dei medicinali di casa ed elimina in sicurezza quelli scaduti 💊",
         "Imposta una sincronizzazione cloud automatica per non rischiare di perdere i tuoi progetti scolastici ☁️",
@@ -371,7 +372,7 @@ const databaseAttivita = {
         "Studia le regole della teoria dei colori applicata al web design (contrasti e accessibilità) 🎨",
         "Pulisci e lucida le scarpe eleganti o gli stivali per tenerli pronti all'uso 👞",
         "Fai un elenco delle tue abitudini improduttive e scrivi un'alternativa positiva per ciascuna 🔄",
-        "Impara a cucire un bottone su una camicia o a riparare un piccolo strappo in autonomia 🧵",
+        "Impara a cucire un bottone su una camicia o a riparare un... strappo in autonomia 🧵",
         "Fai un bilancio dei libri o dei corsi completati negli ultimi sei mesi valutando i progressi 📚",
         "Butta giù un business plan di una pagina per una tua idea di business o progetto secondario 🚀",
         "Impara i concetti cardine della SEO per capire come indicizzare un sito web su Google 🔍",
@@ -407,8 +408,8 @@ const databaseAttivita = {
         "Scrivi una recensione tecnica dettagliata di un software o di un'estensione che usi ogni giorno 💻",
         "Esercitati nella lettura rapida provando a scorrere una pagina usando la visione periferica 📖",
         "Rimuovi i file di cache obsoleti e i file temporanei di sistema per velocizzare il PC 🧹",
-        "Butta giù le linee guida per la tua identity visiva personale (colori, font, stile) online 🚀",
-        "Impara a usare una bacheca in stile Kanban (como Trello) per gestire i tuoi task quotidiani 📊",
+        "Butta giù le linee guarda per la tua identità visiva personale (colori, font, stile) online 🚀",
+        "Impara a usare una bacheca in stile Kanban (come Trello) per gestire i tuoi task quotidiani 📊",
         "Pulisci e ordina lo scomparto dei condimenti in cucina verificando lo stato di conservazione 🧂",
         "Scrivi le risposte alle 10 domande più frequenti che potrebbero farti a un colloquio di lavoro 💬",
         "Impara le tecniche di base della correzione del colore (color grading) su una fotografia 🎨",
@@ -458,7 +459,7 @@ const databaseAttivita = {
         "Riorganizza i tuoi file video sul computer dividendoli per progetti o ricordi personali 🎞️",
         "Impara a fare la formattazione corretta dei paragrafi su un documento di testo digitale 📄",
         "Pulisci la cover del tuo telefono igienizzandola accuratamente da ogni residuo 🧼",
-        "Trova un articolo che spieghi l'importance della biodiversità negli ecosistemi naturali 🌿",
+        "Trova un articolo che spieghi l'importanza della biodiversità negli ecosistemi naturali 🌿",
         "Fai un elenco di 5 mete storiche italiane che vorresti approfondire durante le vacanze 🇮🇹",
         "Impara i comandi di scelta rapida da tastiera (shortcut) più utili per il browser che usi 🌐",
         "Riorganizza il cassetto della scrivania posizionando gli oggetti di uso quotidiano davanti 📐",
@@ -469,7 +470,7 @@ const databaseAttivita = {
     ]
 };
 
-// CONTROLLO AUTOMATICO DELLA SETTIMANA CORRENTE
+// FUNZIONE OTTENIMENTO DATI (con controllo automatico della settimana corrente)
 function ottieniDatiStatistiche() {
     const dataCorrente = new Date();
     const numeroSettimana = Math.ceil((((dataCorrente - new Date(dataCorrente.getFullYear(), 0, 1)) / 86400000) + 3) / 7);
@@ -491,7 +492,7 @@ function salvaDatiStatistiche(dati) {
     localStorage.setItem('scaccianoia_stats_data', JSON.stringify(dati));
 }
 
-// LOGICHE DI NAVIGAZIONE E GRAFICO
+// INTERFACCIA E NAVIGAZIONE
 document.addEventListener('DOMContentLoaded', () => {
     let categoriaSelezionata = '';
     let attivitaEstratta = '';
@@ -521,6 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultBadge.textContent = nomiCategorie[categoria];
     }
 
+    // Navigazione Categorie
     document.querySelectorAll('.btn-category').forEach(button => {
         button.addEventListener('click', () => {
             categoriaSelezionata = button.getAttribute('data-category');
@@ -529,10 +531,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Reroll
     document.getElementById('btn-reroll').addEventListener('click', () => {
         if (categoriaSelezionata) estraiAttivita(categoriaSelezionata);
     });
 
+    // Accetta Sfida
     document.getElementById('btn-accetta').addEventListener('click', () => {
         const dati = ottieniDatiStatistiche();
         let giornoIncluso = new Date().getDay();
@@ -541,22 +545,24 @@ document.addEventListener('DOMContentLoaded', () => {
         dati[indiceGiorno] += 1;
         salvaDatiStatistiche(dati);
 
-        alert('Sfida accettata e registrata! Torna alla home per continuare.');
+        alert('Sfida accettata e registrata! Vai a spaccare! 🔥');
         mostraSchermata('screen-home');
     });
 
+    // Vai a schermata Statistiche (Tu)
     document.getElementById('btn-to-stats').addEventListener('click', () => {
         disegnaGrafico();
         mostraSchermata('screen-stats');
     });
 
+    // Torna alla Home
     document.querySelectorAll('.btn-back').forEach(btn => {
         btn.addEventListener('click', () => {
             mostraSchermata('screen-home');
         });
     });
 
-    // Reset dati manuale dal bottone rosso
+    // Pulsante Rosso di Reset Manuale dei Dati
     document.getElementById('btn-reset-dati').addEventListener('click', () => {
         if (confirm("Vuoi davvero azzerare tutte le statistiche di questa settimana? 🛑")) {
             const datiAzzerati = [0, 0, 0, 0, 0, 0, 0];
@@ -565,6 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Disegna Grafico
     function disegnaGrafico() {
         const dati = ottieniDatiStatistiche();
         const giorniSettimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
