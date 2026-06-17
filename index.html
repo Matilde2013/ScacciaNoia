@@ -2,98 +2,103 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scaccia-Noia Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ScacciaNoia</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ScacciaNoia">
+    
+    <link class="apple-touch-icon" href="icona-app.png">
+    
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        .stats-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .btn-reset-danger {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border: 1px solid #ef4444 !important;
+            color: #fca5a5 !important;
+            padding: 8px 12px !important;
+            font-size: 0.85rem !important;
+            border-radius: 8px !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-reset-danger:active {
+            background: #ef4444 !important;
+            color: #ffffff !important;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="background-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
+    <div class="background-orbs bg-orb-1"></div>
+    <div class="background-orbs bg-orb-2"></div>
 
-    <main class="app-container">
+    <div class="app-container">
         
-        <section id="screen-home" class="app-screen active">
-            <h1 class="main-title">Ti annoi? 🥱</h1>
-            <p class="subtitle">Sconfiggi la noia generando un'attività su misura per te.</p>
-            
-            <div class="glass-card controls-group">
-                <label for="category-select">Scegli dove o come agire:</label>
-                <select id="category-select" class="custom-select">
-                    <option value="in_casa">🏠 In Casa</option>
-                    <option value="all_aperto">🌳 All'Aperto</option>
-                    <option value="produttive">🚀 Produttive</option>
-                </select>
+        <section id="screen-home" class="screen active">
+            <div class="glass-card header-card">
+                <h1>ScacciaNoia ⚡</h1>
+                <p>Trova istantaneamente qualcosa di figo da fare ed elimina la noia della giornata.</p>
+            </div>
+
+            <div class="glass-card main-card">
+                <h3>Dove ti trovi adesso?</h3>
+                <div class="category-buttons">
+                    <button class="btn btn-category" data-category="in_casa">🏠 In Casa</button>
+                    <button class="btn btn-category" data-category="all_aperto">🌳 All'Aperto</button>
+                    <button class="btn btn-category" data-category="produttive">🚀 Produttive</button>
+                </div>
+            </div>
+
+            <button id="btn-to-stats" class="btn btn-secondary">Guarda le tue statistiche 📊</button>
+        </section>
+
+        <section id="screen-result" class="screen">
+            <div class="glass-card result-card">
+                <span class="badge" id="result-badge">Categoria</span>
+                <h2>Ecco la tua sfida:</h2>
+                <p id="text-attivita">Caricamento attività...</p>
                 
-                <button id="btn-generate" class="btn-primary">Genera Attività ✨</button>
+                <div class="result-actions">
+                    <button id="btn-accetta" class="btn btn-success">Accetta la sfida! 🔥</button>
+                    <button id="btn-reroll" class="btn btn-reroll">Dai un'altra opzione 🔄</button>
+                </div>
             </div>
-
-            <div id="result-box" class="glass-card result-card hidden">
-                <p id="activity-text">L'attività apparirà qui...</p>
-                <button id="btn-heart" class="btn-heart-action">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-            </div>
+            <button class="btn btn-secondary btn-back">Torna alla Home 🏠</button>
         </section>
 
-        <section id="screen-favorites" class="app-screen">
-            <h2 class="section-title">I Tuoi Preferiti ❤️</h2>
-            <p class="subtitle">Le idee che hai salvato per il futuro.</p>
-            
-            <div id="favorites-list" class="favorites-scroll-container">
-                <div class="empty-state">Non hai ancora salvato nessuna attività. Fai un salto nella Home!</div>
-            </div>
-        </section>
-
-        <section id="screen-profile" class="app-screen">
-            <h2 class="section-title">Il Tuo Profilo 📊</h2>
-            <p class="subtitle">Analisi dei tuoi momenti di noia durante la settimana.</p>
-            
-            <div class="glass-card stat-box">
-                <h3>Stile di Noia Dominante</h3>
-                <p id="dominant-category-text" class="stat-highlight">Nessun dato</p>
-            </div>
-
-            <div class="glass-card chart-card">
-                <h3>Frequenza della Noia (Settimanale)</h3>
+        <section id="screen-stats" class="screen">
+            <div class="glass-card stats-card">
+                <h2>Le tue statistiche settimanali 📊</h2>
+                <p>Quante volte hai sconfitto la noia in questa settimana:</p>
+                
                 <div class="chart-container">
-                    <svg viewBox="0 0 700 250" class="boredom-svg-chart">
-                        <defs>
-                            <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.4"/>
-                                <stop offset="100%" stop-color="#4facfe" stop-opacity="0.0"/>
-                            </linearGradient>
-                        </defs>
-                        <path id="chart-area" d="" fill="url(#chart-grad)"></path>
-                        <path id="chart-line" d="" fill="none" stroke="#00f2fe" stroke-width="4" stroke-linecap="round"></path>
-                        <g id="chart-dots"></g>
-                    </svg>
+                    <div class="chart-axis-y">
+                        <span>10</span>
+                        <span>5</span>
+                        <span>0</span>
+                    </div>
+                    <div class="chart-bars" id="chart-bars-container">
+                        </div>
                 </div>
-                <div class="chart-labels">
-                    <span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
+
+                <div class="stats-footer">
+                    <button class="btn btn-secondary btn-back" style="margin: 0;">Torna alla Home 🏠</button>
+                    <button id="btn-reset-dati" class="btn-reset-danger">Reset Dati 🔄🛑</button>
                 </div>
             </div>
         </section>
 
-    </main>
-
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-target="screen-home">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span>Home</span>
-        </button>
-        <button class="nav-item" data-target="screen-favorites">
-            <i class="fa-solid fa-heart"></i>
-            <span>Preferiti</span>
-        </button>
-        <button class="nav-item" data-target="screen-profile">
-            <i class="fa-solid fa-user"></i>
-            <span>Tu</span>
-        </button>
-    </nav>
+    </div>
 
     <script src="script.js"></script>
 </body>
