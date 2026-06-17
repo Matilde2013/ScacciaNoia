@@ -240,122 +240,204 @@ const databaseAttivita = {
     ]
 };
 
-// GESTIONE DELLE STATISTICHE CON LOCALSTORAGE
-function ottieniDatiStatistiche() {
-    const dataCorrente = new Date();
-    const numeroSettimana = Math.ceil((((dataCorrente - new Date(dataCorrente.getFullYear(), 0, 1)) / 86400000) + 3) / 7);
-    const chiaveSettimana = `${dataCorrente.getFullYear()}-W${numeroSettimana}`;
-    
-    const salvataggioPrecedente = localStorage.getItem('scaccianoia_stats_data');
-    const idSettimanaSalvata = localStorage.getItem('scaccianoia_stats_week');
+// ==========================================
+// GESTIONE STATO DELL'APPLICAZIONE
+// ==========================================
+let preferiti = JSON.parse(localStorage.getItem('scaccianoia_preferiti')) || [];
+let statistiche = JSON.parse(localStorage.getItem('scaccianoia_stats')) || {
+    in_casa: 0,
+    all_aperto: 0,
+    produttive: 0,
+    settimana: [0, 0, 0, 0, 0, 0, 0] // Lun-Dom
+};
 
-    if (!salvataggioPrecedente || idSettimanaSalvata !== chiaveSettimana) {
-        const datiVuoti = [0, 0, 0, 0, 0, 0, 0];
-        localStorage.setItem('scaccianoia_stats_data', JSON.stringify(datiVuoti));
-        localStorage.setItem('scaccianoia_stats_week', chiaveSettimana);
-        return datiVuoti;
-    }
-    return JSON.parse(salvataggioPrecedente);
-}
-
-function salvaDatiStatistiche(dati) {
-    localStorage.setItem('scaccianoia_stats_data', JSON.stringify(dati));
-}
-
-// LOGICHE DI NAVIGAZIONE DEI BOTTONI E DEL GRAFICO
 document.addEventListener('DOMContentLoaded', () => {
-    let categoriaSelezionata = '';
-    let attivitaEstratta = '';
+    let ultimaAttivitaEstratta = "";
 
-    const textAttivita = document.getElementById('text-attivita');
-    const resultBadge = document.getElementById('result-badge');
-    const chartBarsContainer = document.getElementById('chart-bars-container');
+    // 1. NAVIGAZIONE DELLE SCHERMATE (Bottom Nav)
+    const navItems = document.querySelectorAll('.nav-item');
+    const screens = document.querySelectorAll('.app-screen');
 
-    function mostraSchermata(idSchermata) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(idSchermata).classList.add('active');
-    }
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const targetScreenId = item.getAttribute('data-target');
+            
+            // Attiva il bottone corretto nella barra
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
 
-    function estraiAttivita(categoria) {
-        const lista = databaseAttivita[categoria];
-        let nuovaAttivita = lista[Math.floor(Math.random() * lista.length)];
-        while (nuovaAttivita === attivitaEstratta && lista.length > 1) {
-            nuovaAttivita = lista[Math.floor(Math.random() * lista.length)];
-        }
-        attivitaEstratta = nuovaAttivita;
-        textAttivita.textContent = attivitaEstratta;
-        
-        const nomiCategorie = { in_casa: '🏠 IN CASA', all_aperto: '🌳 ALL\'APERTO', produttive: '🚀 PRODUTTIVE' };
-        resultBadge.textContent = nomiCategorie[categoria];
-    }
+            // Mostra la schermata corretta
+            screens.forEach(screen => screen.classList.remove('active'));
+            const targetScreen = document.getElementById(targetScreenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
 
-    // Evento bottoni categorie (Home -> Risultato)
-    document.querySelectorAll('.btn-category').forEach(button => {
-        button.addEventListener('click', () => {
-            categoriaSelezionata = button.getAttribute('data-category');
-            estraiAttivita(categoriaSelezionata);
-            mostraSchermata('screen-result');
+            // Se andiamo sul profilo o preferiti, aggiorna i dati visivi
+            if (targetScreenId === 'screen-profile') aggiornaProfilo();
+            if (targetScreenId === 'screen-favorites') aggiornaPreferitiUI();
         });
     });
 
-    // Evento Bottone Un'altra opzione (Reroll)
-    document.getElementById('btn-reroll').addEventListener('click', () => {
-        if (categoriaSelezionata) estraiAttivita(categoriaSelezionata);
-    });
+    // 2. GENERAZIONE ATTIVITÀ (Home)
+    const btnGenerate = document.getElementById('btn-generate');
+    const categorySelect = document.getElementById('category-select');
+    const resultBox = document.getElementById('result-box');
+    const activityText = document.getElementById('activity-text');
+    const btnHeart = document.getElementById('btn-heart');
 
-    // Evento Bottone Accetta la sfida
-    document.getElementById('btn-accetta').addEventListener('click', () => {
-        const dati = ottieniDatiStatistiche();
+    if (btnGenerate) {
+        btnGenerate.addEventListener('click', () => {
+            const categoria = categorySelect.value;
+            const lista = databaseAttivita[categoria];
+
+            if (lista && lista.length > 0) {
+                // Estrazione casuale evitando doppioni immediati
+                let nuovaAttivita = lista[Math.floor(Math.random() * lista.length)];
+                while (nuovaAttivita === ultimaAttivitaEstratta && lista.length > 1) {
+                    nuovaAttivita = lista[Math.floor(Math.random() * lista.length)];
+                }
+
+                ultimaAttivitaEstratta = nuovaAttivita;
+                activityText.textContent = ultimaAttivitaEstratta;
+
+                // Mostra la card del risultato rimuovendo la classe hidden
+                resultBox.classList.remove('hidden');
+
+                // Reset dell'icona del cuore (torna vuoto a ogni nuova generazione)
+                const cuoreIcona = btnHeart.querySelector('i');
+                cuoreIcona.className = 'fa-regular fa-heart';
+
+                // Registra il click per le statistiche
+                salvaStatistica(categoria);
+            }
+        });
+    }
+
+    // 3. AGGIUNGI AI PREFERITI (Cuore)
+    if (btnHeart) {
+        btnHeart.addEventListener('click', () => {
+            if (!ultimaAttivitaEstratta) return;
+
+            const cuoreIcona = btnHeart.querySelector('i');
+            const index = preferiti.indexOf(ultimaAttivitaEstratta);
+
+            if (index === -1) {
+                // Aggiungi ai preferiti
+                preferiti.push(ultimaAttivitaEstratta);
+                cuoreIcona.className = 'fa-solid fa-heart'; // Cuore pieno
+            } else {
+                // Rimuovi dai preferiti
+                preferiti.splice(index, 1);
+                cuoreIcona.className = 'fa-regular fa-heart'; // Cuore vuoto
+            }
+
+            localStorage.setItem('scaccianoia_preferiti', JSON.stringify(preferiti));
+        });
+    }
+
+    // ==========================================
+    // FUNZIONI DI SUPPORTO (Preferiti & Grafici)
+    // ==========================================
+    
+    function salvaStatistica(categoria) {
+        // Incrementa contatore categoria dominante
+        statistich[categoria] = (statistich[categoria] || 0) + 1;
+
+        // Incrementa giorno della settimana corrente (0 = Lunedì, 6 = Domenica)
         let giornoIncluso = new Date().getDay();
-        let indiceGiorno = giornoIncluso === 0 ? 6 : giornoIncluso - 1; // Sposta Domenica alla fine
+        let indiceGiorno = giornoIncluso === 0 ? 6 : giornoIncluso - 1;
+        statistiche.settimana[indiceGiorno] += 1;
 
-        dati[indiceGiorno] += 1;
-        salvaDatiStatistiche(dati);
+        localStorage.setItem('scaccianoia_stats', JSON.stringify(statistiche));
+    }
 
-        alert('Sfida accettata e registrata! Sconfiggi la noia! ⚡');
-        mostraSchermata('screen-home');
-    });
+    function aggiornaPreferitiUI() {
+        const container = document.getElementById('favorites-list');
+        if (!container) return;
 
-    // Navigazione verso Statistiche
-    document.getElementById('btn-to-stats').addEventListener('click', () => {
-        disegnaGrafico();
-        mostraSchermata('screen-stats');
-    });
-
-    // Bottoni per tornare indietro
-    document.querySelectorAll('.btn-back').forEach(btn => {
-        btn.addEventListener('click', () => {
-            mostraSchermata('screen-home');
-        });
-    });
-
-    // Reset dati manuale (Bottone rosso)
-    document.getElementById('btn-reset-dati').addEventListener('click', () => {
-        if (confirm("Vuoi davvero azzerare tutte le statistiche di questa settimana? 🛑")) {
-            const datiAzzerati = [0, 0, 0, 0, 0, 0, 0];
-            salvaDatiStatistiche(datiAzzerati);
-            disegnaGrafico();
+        if (preferiti.length === 0) {
+            container.innerHTML = '<div class="empty-state">Non hai ancora salvato nessuna attività. Fai un salto nella Home!</div>';
+            return;
         }
-    });
 
-    // Funzione rendering barre grafiche
-    function disegnaGrafico() {
-        const dati = ottieniDatiStatistiche();
-        const giorniSettimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
-        chartBarsContainer.innerHTML = '';
-
-        dati.forEach((valore, indice) => {
-            const barWrapper = document.createElement('div');
-            barWrapper.className = 'chart-bar-wrapper';
-            const percentualeAltezza = Math.min((valore / 10) * 100, 100);
-
-            barWrapper.innerHTML = `
-                <div class="chart-bar-fill" style="height: ${percentualeAltezza}%">
-                    <span class="chart-bar-value">${valore}</span>
-                </div>
-                <span class="chart-day-label">${giorniSettimana[indice]}</span>
+        container.innerHTML = '';
+        preferiti.forEach((att, i) => {
+            const div = document.createElement('div');
+            div.className = 'fav-item';
+            div.innerHTML = `
+                <span class="fav-text">${att}</span>
+                <button class="btn-remove-fav" data-index="${i}"><i class="fa-solid fa-trash"></i></button>
             `;
-            chartBarsContainer.appendChild(barWrapper);
+            container.appendChild(div);
         });
+
+        // Evento per eliminare direttamente dalla lista preferiti
+        container.querySelectorAll('.btn-remove-fav').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = btn.getAttribute('data-index');
+                preferiti.splice(idx, 1);
+                localStorage.setItem('scaccianoia_preferiti', JSON.stringify(preferiti));
+                aggiornaPreferitiUI();
+            });
+        });
+    }
+
+    function aggiornaProfilo() {
+        // 1. Calcolo Categoria Dominante
+        const testoDominante = document.getElementById('dominant-category-text');
+        if (testoDominante) {
+            const m = statistiche;
+            let maxVal = 0;
+            let catDominante = "Nessun dato";
+
+            if (m.in_casa > maxVal) { maxVal = m.in_casa; catDominante = "🏠 Casalingo"; }
+            if (m.all_aperto > maxVal) { maxVal = m.all_aperto; catDominante = "🌳 Esploratore"; }
+            if (m.produttive > maxVal) { maxVal = m.produttive; catDominante = "🚀 Inarrestabile"; }
+
+            testoDominante.textContent = maxVal > 0 ? catDominante : "Nessun dato";
+        }
+
+        // 2. Disegno Grafico SVG Dinamico
+        const pLine = document.getElementById('chart-line');
+        const pArea = document.getElementById('chart-area');
+        const pDots = document.getElementById('chart-dots');
+
+        if (!pLine || !pArea || !pDots) return;
+
+        const dati = statistiche.settimana;
+        const maxDato = Math.max(...dati, 5); // Almeno scala fino a 5 click per estetica
+        
+        // Coordinate dei 7 giorni nell'asse X del grafico SVG (Largh: 700, Alt: 250)
+        const xCoords = [50, 150, 250, 350, 450, 550, 650];
+        let punti = [];
+
+        pDots.innerHTML = ''; // Pulisce i pallini precedenti
+
+        dati.forEach((val, index) => {
+            const x = xCoords[index];
+            // Calcola Y invertita (in SVG 0 è in alto, 200 è il fondo utile)
+            const y = 200 - ((val / maxDato) * 150); 
+            punti.push({x, y});
+
+            // Disegna il pallino sul nodo
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", "6");
+            circle.setAttribute("fill", "#00f2fe");
+            pDots.appendChild(circle);
+        });
+
+        // Costruisci la stringa Path
+        let dLine = `M ${punti[0].x} ${punti[0].y}`;
+        for(let i = 1; i < punti.length; i++) {
+            dLine += ` L ${punti[i].x} ${punti[i].y}`;
+        }
+
+        let dArea = dLine + ` L ${punti[punti.length-1].x} 200 L ${punti[0].x} 200 Z`;
+
+        pLine.setAttribute('d', dLine);
+        pArea.setAttribute('d', dArea);
     }
 });
